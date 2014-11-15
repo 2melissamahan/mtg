@@ -431,7 +431,7 @@ module.exports = function(grunt) {
     // Default Task
     //--------------------------------
  
-    grunt.registerTask('default', ['jsbeautifier:default', 'jshint', 'build', 'test:dist']); // basic sanity checks
+    grunt.registerTask('default', ['jsbeautifier:default', 'jshint', 'build', 'test:dist', 'imagemin', 'cssmin',]); // basic sanity checks
  
     //--------------------------------
     // Build Tasks
