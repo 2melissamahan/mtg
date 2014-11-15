@@ -1,11 +1,11 @@
 'use strict';
- 
+
 module.exports = function(grunt) {
- 
+
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
- 
- 
+
+
     // configurable paths
     var paths = {
         dist: 'public/assets',
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
             marketing: 'vendor/marketing'
         }
     };
- 
+
     var fileLists = {
         mainApp: [
             '<%= paths.src.mainApp %>/bower_components/angular/angular.js',
@@ -31,21 +31,21 @@ module.exports = function(grunt) {
             '<%= paths.src.mainApp %>/scripts/views.js'
         ]
     };
- 
- 
+
+
     try {
         paths.vendor = require('./bower.json').appPath || paths.vendor;
     } catch (e) {}
- 
- 
+
+
     //--------------------------------
     // Grunt Config
     //--------------------------------
- 
- 
+
+
     grunt.initConfig({
         paths: paths,
- 
+
         rails: {
             options: {
                 port: '3000',
@@ -239,13 +239,14 @@ module.exports = function(grunt) {
                     src: ['generated/*']
                 }]
             },
-            
+
             mainApp: {
-                files: [
-                    {src: fileLists.mainApp, dest: '<%= paths.dist %>}/scripts'}
-                ]
+                files: [{
+                    src: fileLists.mainApp,
+                    dest: '<%= paths.dist %>}/scripts'
+                }]
             }
- 
+
         },
         concurrent: {
             test: ['compass:test'],
@@ -256,12 +257,12 @@ module.exports = function(grunt) {
             unit: {
                 configFile: 'karma/karma.conf.js'
             },
- 
+
             // dist for minified code
             dist: {
                 configFile: 'karma/karma.conf.dist.js'
             },
- 
+
             // for CI builds, run `grunt test-ci`
             continuous: {
                 configFile: 'karma/karma.conf.dist.js',
@@ -399,6 +400,12 @@ module.exports = function(grunt) {
                 src: ['<%= paths.dist %>{,/**}/*'],
             }
         },
+        cssmin: {
+            minify: {
+                src: 'path-to/default.css',
+                dest: 'path-to/default.min.css'
+            }
+        },
         shell: {
             testRails: {
                 options: {
@@ -420,68 +427,68 @@ module.exports = function(grunt) {
                     src: 'features{,/**}/*.feature'
                 }]
             }
- 
+
         }
- 
- 
- 
+
+
+
     });
- 
+
     //--------------------------------
     // Default Task
     //--------------------------------
- 
-    grunt.registerTask('default', ['jsbeautifier:default', 'jshint', 'build', 'test:dist', 'imagemin', 'cssmin',]); // basic sanity checks
- 
+
+    grunt.registerTask('default', ['jsbeautifier:default', 'jshint', 'build', 'test:dist', 'imagemin', 'cssmin', ]); // basic sanity checks
+
     //--------------------------------
     // Build Tasks
     //--------------------------------
- 
+
     grunt.registerTask('build', ['clean:all', 'build-styles', 'build-scripts', 'cacheBust', 'compress']); // full dist build
- 
+
     grunt.registerTask('build-scripts', ['build-common', 'build-mainApp', 'build-marketing']); // all javascript
- 
+
     grunt.registerTask('build-dev-scripts', ['build-common', 'build-dev-mainApp', 'build-marketing']); // all javascript
- 
+
     grunt.registerTask('build-styles', ['clean:styles', 'concurrent:dist', 'autoprefixer:multiple_files']); // css build
- 
+
     grunt.registerTask('build-common', ['clean:common', 'uglify:common']); // common javascript
- 
+
     grunt.registerTask('build-mainApp', ['clean:mainApp', 'ngtemplates', 'uglify:mainApp']); // main-app javascript
-    
+
     grunt.registerTask('build-dev-mainApp', ['clean:mainApp', 'ngtemplates', 'concat:mainApp']); // main-app javascript
- 
+
     grunt.registerTask('build-marketing', ['clean:marketing', 'uglify:marketing']); // marketing javascript
- 
+
     //--------------------------------
     // Dev Tasks
     //--------------------------------
- 
+
     // kicks off intial build and then continues to watch
     grunt.registerTask('server', ['rails:server:start', 'build-scripts', 'build-styles', 'open', 'watch:server']);
- 
+
     // same as server, except concatenates front royal code without uglifying
     grunt.registerTask('devserver', ['rails:server:start', 'build-dev-scripts', 'build-styles', 'open', 'watch:devserver']);
- 
+
     grunt.registerTask('beautify', ['jsbeautifier:default']); // easier to remember task name
- 
- 
- 
+
+
+
     //--------------------------------
     // Test Tasks
     //--------------------------------
- 
+
     grunt.registerTask('test', ['karma:unit']); // dev test runner
- 
+
     grunt.registerTask('test-dist', ['build:all', 'karma:dist']); // dev minified source test runner
- 
+
     grunt.registerTask('test-ci', ['karma:continuous']); // CI post-compile test runner
- 
-    
+
+
     //--------------------------------
     // Watch Tasks
     //--------------------------------
- 
+
     var baseWatchConfig = {
         common: {
             files: [
@@ -532,7 +539,7 @@ module.exports = function(grunt) {
             }
         }
     };
-    
+
     grunt.registerTask('watch:server', function() {
         // Configuration for watch:test tasks.
         var config = {
@@ -541,11 +548,11 @@ module.exports = function(grunt) {
             styles: baseWatchConfig.styles,
             mainApp: baseWatchConfig.mainApp
         };
- 
+
         grunt.config('watch', config);
         grunt.task.run('watch');
     });
-    
+
     grunt.registerTask('watch:devserver', function() {
         // Configuration for watch:test tasks.
         var config = {
@@ -554,9 +561,9 @@ module.exports = function(grunt) {
             styles: baseWatchConfig.styles,
             devFrontRoyal: baseWatchConfig.devFrontRoyal
         };
- 
+
         grunt.config('watch', config);
         grunt.task.run('watch');
     });
- 
+
 };
