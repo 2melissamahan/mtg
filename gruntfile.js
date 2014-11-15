@@ -165,12 +165,12 @@ module.exports = function(grunt) {
                 outputStyle: 'compressed'
             },
             dist: {},
-            test: {
-                options: {
-                    cssDir: '<%= paths.tmp %>/styles',
-                    generatedImagesDir: '<%= paths.tmp %>/images/generated',
-                }
-            }
+            //test: {
+            //    options: {
+            //        cssDir: '<%= paths.tmp %>/styles',
+            //        generatedImagesDir: '<%= paths.tmp %>/images/generated',
+            //    }
+            //}
         },
         autoprefixer: {
             options: {
@@ -249,36 +249,36 @@ module.exports = function(grunt) {
 
         },
         concurrent: {
-            test: ['compass:test'],
+            //    test: ['compass:test'],
             dist: ['compass:dist', 'imagemin', 'svgmin']
         },
-        karma: {
-            // grunt test defaults to karma:unit
-            unit: {
-                configFile: 'karma/karma.conf.js'
-            },
+        //karma: {
+        //     grunt test defaults to karma:unit
+        //    unit: {
+        //        options: {'karma/karma.conf.js'
+        //    },
 
-            // dist for minified code
-            dist: {
-                configFile: 'karma/karma.conf.dist.js'
-            },
+        //     dist for minified code
+        //    dist: {
+        //        configFile: 'karma/karma.conf.dist.js'
+        //    },
 
-            // for CI builds, run `grunt test-ci`
-            continuous: {
-                configFile: 'karma/karma.conf.dist.js',
-                reporters: ['junit'],
-                junitReporter: {
-                    outputFile: '../test-results/main-app.xml',
-                    suite: ''
-                }
-            },
-        },
+        //     for CI builds, run `grunt test-ci`
+        //    continuous: {
+        //        configFile: 'karma/karma.conf.dist.js',
+        //        reporters: ['junit'],
+        //        junitReporter: {
+        //            outputFile: '../test-results/main-app.xml',
+        //            suite: ''
+        //       }
+        //    },
+        //},
         jsbeautifier: { // https://npmjs.org/package/grunt-jsbeautifier
             default: {
                 src: [
                     'Gruntfile.js',
-                    'karma.conf.js',
-                    'karma.conf.dist.js',
+                    //    'karma.conf.js',
+                    //    'karma.conf.dist.js',
                     '<%= paths.vendor %>/*/scripts/{,*/}*.js',
                     '<%= paths.vendor %>/*/components/*/scripts/**/*.js'
                 ]
@@ -286,8 +286,8 @@ module.exports = function(grunt) {
             validate: {
                 src: [
                     'Gruntfile.js',
-                    'karma.conf.js',
-                    'karma.conf.dist.js',
+                    //    'karma.conf.js',
+                    //    'karma.conf.dist.js',
                     '<%= paths.vendor %>/*/scripts/{,*/}*.js',
                     '<%= paths.vendor %>/*/components/*/scripts/**/*.js'
                 ],
@@ -438,7 +438,8 @@ module.exports = function(grunt) {
     // Default Task
     //--------------------------------
 
-    grunt.registerTask('default', ['jsbeautifier:default', 'jshint', 'build', 'test:dist', 'imagemin', 'cssmin', ]); // basic sanity checks
+    grunt.registerTask('default', ['jsbeautifier:default', 'jshint', 'build', 'imagemin', 'cssmin', ]); // basic sanity checks
+
 
     //--------------------------------
     // Build Tasks
@@ -478,11 +479,11 @@ module.exports = function(grunt) {
     // Test Tasks
     //--------------------------------
 
-    grunt.registerTask('test', ['karma:unit']); // dev test runner
+    //grunt.registerTask('test', ['karma:unit']); // dev test runner
 
-    grunt.registerTask('test-dist', ['build:all', 'karma:dist']); // dev minified source test runner
+    //grunt.registerTask('test-dist', ['build:all', 'karma:dist']); // dev minified source test runner
 
-    grunt.registerTask('test-ci', ['karma:continuous']); // CI post-compile test runner
+    //grunt.registerTask('test-ci', ['karma:continuous']); // CI post-compile test runner
 
 
     //--------------------------------

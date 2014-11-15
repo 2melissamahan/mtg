@@ -39,5 +39,11 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 #frontend management using bower and angular.js
-gem 'bower-rails'
+gem 'bower-rails', '~> 1.3.2'
+gem 'angularjs-rails'
 gem 'angular-rails-templates'
+
+group :assets do
+	gem 'compass-rails'
+	#Add compass extensions here 
+end
