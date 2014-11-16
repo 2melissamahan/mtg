@@ -38,6 +38,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 gem 'bower-rails'
 gem 'angularjs-rails'
 gem 'angular-rails-templates'
+gem 'rubycas-client'
 
 
 group :assets do
